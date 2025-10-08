@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AgroFlux | Iniciar sesión</title>
+  <meta name="color-scheme" content="light dark" />
+  <!-- Enlazamos el CSS -->
+  <link rel="stylesheet" href="../CSS/login.css">
+</head>
+<body>
+  <main class="card" role="main" aria-labelledby="title">
+    <div class="logo" aria-hidden="true">
+      <div class="logo-badge" title="AgroFlux">AF</div>
+      <h1 id="title">AgroFlux</h1>
+    </div>
+    <p class="subtitle">Inicia sesión para continuar</p>
+
+    <form id="loginForm" novalidate>
+      <div class="field">
+        <label for="userId">ID de usuario</label>
+        <div class="control">
+          <input id="userId" name="userId" type="text" inputmode="text" autocomplete="username"
+                 placeholder="Ej. AGR-000123" aria-describedby="userIdHelp" required />
+        </div>
+        <div id="userIdHelp" class="help">Tu identificador interno o correo corporativo.</div>
+      </div>
+
+      <div class="field">
+        <label for="password">Contraseña</label>
+        <div class="control">
+          <input id="password" name="password" type="password" autocomplete="current-password"
+                 placeholder="Ingresa tu contraseña" required minlength="6" />
+          <button type="button" class="icon-btn" id="togglePwd" aria-label="Mostrar u ocultar contraseña" title="Mostrar/ocultar contraseña">👁️</button>
+        </div>
+        <div id="passwordError" class="error" aria-live="polite"></div>
+      </div>
+
+      <div class="row">
+        <label class="meta">
+          <input type="checkbox" id="remember" class="checkbox" />
+          <span>Recordarme</span>
+        </label>
+
+        <button id="recoverBtn" type="button" class="btn btn-ghost">Recuperar contraseña</button>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" type="submit">Iniciar sesión</button>
+      </div>
+      <hr class="divider" />
+      <p class="help">¿Problemas para entrar? Usa “Recuperar contraseña”.</p>
+      <div id="formError" class="error" aria-live="polite"></div>
+    </form>
+  </main>
+
+  <!-- Modal Recuperar contraseña -->
+  <div id="recoverModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="recoverTitle" aria-hidden="true">
+    <div class="modal">
+      <h2 id="recoverTitle">Recuperar contraseña</h2>
+      <p>Ingresa tu ID o correo para enviarte un enlace de restablecimiento.</p>
+      <div class="field">
+        <label for="recoverInput">ID o correo</label>
+        <div class="control">
+          <input id="recoverInput" type="text" placeholder="tu.id@empresa.com" />
+        </div>
+        <div id="recoverError" class="error"></div>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button type="button" class="btn btn-ghost" id="cancelRecover">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="sendRecover">Enviar enlace</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enlazamos el JS -->
+  <script src="script.js"></script>
+</body>
+</html>

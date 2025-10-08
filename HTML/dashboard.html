@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AgroFlux | Dashboard</title>
+  <link rel="stylesheet" href="../CSS/dashboard.css"/>
+  <meta name="color-scheme" content="light dark"/>
+</head>
+<body>
+  <aside class="sidebar" aria-label="Navegación principal">
+    <div class="brand">
+      <span class="badge">AF</span>
+      <span class="brand-title">AgroFlux</span>
+      <button id="closeSidebar" class="icon-btn" aria-label="Cerrar menú">✕</button>
+    </div>
+    <nav>
+      <ul>
+        <li class="active"><a href="../HTML/dashboard.html"><span>Inicio</span></a></li>
+        <li><a href="#"><span>Sensores</span></a></li>
+        <li><a href="../HTML/predicciones.html"><span>Predicciones</span></a></li>
+        <li><a href="../HTML/alertas.html"><span>Alertas</span></a></li>
+        <li><a href="#"><span>Planning</span></a></li>
+        <li><a href="../HTML/perfil.html"><span>Perfil</span></a></li>
+      </ul>
+    </nav>
+    <footer class="sidebar-footer">
+      <small>v0.1 • Demo</small>
+    </footer>
+  </aside>
+
+  <div class="page">
+    <header class="topbar">
+      <button id="openSidebar" class="icon-btn" aria-label="Abrir menú">☰</button>
+      <div class="search">
+        <input type="search" placeholder="Buscar… (sensores, lotes, predicciones)"/>
+      </div>
+      <div class="user">
+        <button class="chip">admin@agroflux</button>
+      </div>
+    </header>
+
+    <main class="content" role="main">
+      <section class="section-header">
+        <div>
+          <h1>Dashboard</h1>
+        <p class="muted">Resumen operativo y pronósticos de cosecha</p>
+        </div>
+        <div class="actions">
+          <button class="btn btn-primary" id="refreshBtn">Actualizar</button>
+          <button class="btn btn-ghost" id="exportBtn">Exportar</button>
+        </div>
+      </section>
+
+      <section class="kpis">
+        <article class="card kpi">
+          <h3>Producción estimada</h3>
+          <div class="value"><span id="kpiYield">248.7</span> t</div>
+          <p class="delta up">+3.2% vs semana pasada</p>
+        </article>
+        <article class="card kpi">
+          <h3>Órdenes en ruta</h3>
+          <div class="value"><span id="kpiOrders">18</span></div>
+          <p class="delta">ETA promedio: 4.2h</p>
+        </article>
+        <article class="card kpi">
+          <h3>Sensores online</h3>
+          <div class="value"><span id="kpiSensors">96</span>/102</div>
+          <p class="delta down">-2 offline</p>
+        </article>
+        <article class="card kpi">
+          <h3>Alertas activas</h3>
+          <div class="value"><span id="kpiAlerts">5</span></div>
+          <p class="delta warn">3 críticas</p>
+        </article>
+      </section>
+
+      <section class="grid">
+        <article class="card chart-card">
+          <div class="card-header">
+            <h3>Predicción de Cosecha — Próximas 6 semanas</h3>
+            <div class="filters">
+              <select id="lotSelect" aria-label="Seleccionar lote">
+                <option value="Lote A">Lote A</option>
+                <option value="Lote B">Lote B</option>
+                <option value="Lote C">Lote C</option>
+              </select>
+              <select id="metricSelect" aria-label="Seleccionar métrica">
+                <option value="toneladas">Toneladas</option>
+                <option value="cajas">Cajas</option>
+              </select>
+            </div>
+          </div>
+          <!-- Canvas SIN width/height para que tome tamaño CSS -->
+          <canvas id="harvestChart" aria-label="Gráfica de predicción de cosecha" role="img"></canvas>
+          <div class="legend" id="chartLegend"></div>
+        </article>
+
+        <article class="card list-card">
+          <div class="card-header">
+            <h3>Alertas recientes</h3>
+            <button class="btn btn-ghost small">Ver todo</button>
+          </div>
+          <ul class="list">
+            <li><span class="badge warn">Crítica</span> Humedad baja en Lote B (sensor HB-22) • hace 12 min</li>
+            <li><span class="badge info">Info</span> Ruta 7 reprogramada por clima • hace 35 min</li>
+            <li><span class="badge danger">Alta</span> Temperatura > 35°C en Lote C • hace 1 h</li>
+            <li><span class="badge ok">OK</span> Sin anomalías en Lote A • hace 2 h</li>
+          </ul>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="../JavaScript/dashboard.js"></script>
+</body>
+</html>

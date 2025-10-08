@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Harvest – Perfil</title>
+  <link rel="stylesheet" href="../CSS/perfil.css" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="badge">SH</div>
+      <div class="brand-title">Smart Harvest</div>
+      <button id="closeSidebar" class="icon-btn" aria-label="Cerrar menú">✕</button>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="../HTML/dashboard.html">Inicio</a></li>
+        <li><a href="#">Sensores</a></li>
+        <li><a href="../HTML/predicciones.html">Predicciones</a></li>
+        <li><a href="../HTML/alertas.html">Alertas</a></li>
+        <li><a href="#">Planning</a></li>
+        <li class="active"><a href="../HTML/perfil.html">Perfil</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-footer">v1.0 • Proyecto Ágiles</div>
+  </aside>
+
+  <!-- Page -->
+  <main class="page">
+    <header class="topbar">
+      <button id="openSidebar" class="icon-btn" aria-label="Abrir menú">☰</button>
+      <div class="search">
+        <input type="search" placeholder="Buscar en ajustes…" />
+      </div>
+      <span class="chip">Perfil</span>
+    </header>
+
+    <section class="content">
+      <div class="section-header">
+        <div>
+          <h1>Perfil y Configuración</h1>
+          <p class="muted">Gestión de cuenta, preferencias y notificaciones</p>
+        </div>
+        <div class="actions">
+          <button id="btnSaveAll" class="btn btn-primary small">Guardar todo</button>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs card">
+        <button class="tab active" data-tab="cuenta">Cuenta</button>
+        <button class="tab" data-tab="seguridad">Seguridad</button>
+        <button class="tab" data-tab="preferencias">Preferencias</button>
+        <button class="tab" data-tab="notificaciones">Notificaciones</button>
+        <button class="tab" data-tab="integraciones">Integraciones</button>
+      </div>
+
+      <!-- Cuenta -->
+      <div class="card tabpanel" data-panel="cuenta">
+        <div class="grid grid-2">
+          <div>
+            <label class="field">
+              <span>Nombre</span>
+              <input id="inpNombre" type="text" placeholder="Tu nombre" />
+            </label>
+            <label class="field">
+              <span>Correo</span>
+              <input id="inpEmail" type="email" placeholder="tucorreo@dominio.com" />
+            </label>
+            <div class="grid grid-2">
+              <label class="field">
+                <span>Rol</span>
+                <select id="selRol">
+                  <option value="admin">Administrador</option>
+                  <option value="técnico">Técnico</option>
+                  <option value="operador" selected>Operador</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Organización</span>
+                <input id="inpOrg" type="text" placeholder="Ej. Agro MX" />
+              </label>
+            </div>
+          </div>
+
+          <div class="avatar-box">
+            <div class="avatar-wrap">
+              <img id="imgAvatar" src="" alt="Avatar" />
+            </div>
+            <div class="avatar-actions">
+              <label class="btn btn-ghost small">
+                Subir avatar
+                <input id="inpAvatar" type="file" accept="image/*" hidden />
+              </label>
+              <button id="btnQuitarAvatar" class="btn btn-ghost small">Quitar</button>
+            </div>
+            <p class="muted small">PNG o JPG, recomendado 256×256.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seguridad -->
+      <div class="card tabpanel hide" data-panel="seguridad">
+        <div class="grid grid-3">
+          <label class="field">
+            <span>Contraseña actual</span>
+            <input id="pwdActual" type="password" autocomplete="current-password" />
+          </label>
+          <label class="field">
+            <span>Nueva contraseña</span>
+            <input id="pwdNueva" type="password" autocomplete="new-password" />
+          </label>
+          <label class="field">
+            <span>Confirmar nueva</span>
+            <input id="pwdConfirm" type="password" autocomplete="new-password" />
+          </label>
+        </div>
+        <div class="actions">
+          <button id="btnCambiarPwd" class="btn btn-primary small">Cambiar contraseña</button>
+          <span id="pwdMsg" class="muted small"></span>
+        </div>
+
+        <hr class="sep"/>
+        <div class="grid grid-2">
+          <label class="field">
+            <span>2FA</span>
+            <select id="sel2FA">
+              <option value="off">Desactivado</option>
+              <option value="app">App autenticadora</option>
+              <option value="sms">SMS</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Sesiones activas</span>
+            <button id="btnCerrarOtras" class="btn btn-ghost small">Cerrar otras sesiones</button>
+          </label>
+        </div>
+      </div>
+
+      <!-- Preferencias -->
+      <div class="card tabpanel hide" data-panel="preferencias">
+        <div class="grid grid-3">
+          <label class="field">
+            <span>Idioma</span>
+            <select id="selLang">
+              <option value="es" selected>Español</option>
+              <option value="en">English</option>
+              <option value="pt">Português</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Unidades</span>
+            <select id="selUnits">
+              <option value="metric" selected>Métrico (kg, ha)</option>
+              <option value="imperial">Imperial (lb, ac)</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Formato de fecha</span>
+            <select id="selDateFmt">
+              <option value="DMY" selected>DD/MM/AAAA</option>
+              <option value="MDY">MM/DD/AAAA</option>
+              <option value="YMD">AAAA-MM-DD</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="grid grid-2">
+          <label class="field">
+            <span>Tema</span>
+            <select id="selTheme">
+              <option value="auto" selected>Automático</option>
+              <option value="dark">Oscuro</option>
+              <option value="light">Claro</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Zona horaria</span>
+            <input id="inpTimezone" type="text" placeholder="America/Mexico_City" />
+          </label>
+        </div>
+      </div>
+
+      <!-- Notificaciones -->
+      <div class="card tabpanel hide" data-panel="notificaciones">
+        <div class="grid grid-3">
+          <label class="chk"><input id="chkEmail" type="checkbox" checked/> Email</label>
+          <label class="chk"><input id="chkSMS" type="checkbox"/> SMS</label>
+          <label class="chk"><input id="chkInApp" type="checkbox" checked/> In-app</label>
+        </div>
+        <div class="grid grid-3">
+          <label class="field">
+            <span>Silencio (desde)</span>
+            <input id="quietFrom" type="time" value="22:00" />
+          </label>
+          <label class="field">
+            <span>Silencio (hasta)</span>
+            <input id="quietTo" type="time" value="06:00" />
+          </label>
+          <label class="field">
+            <span>Resumen diario (hora)</span>
+            <input id="dailyAt" type="time" value="08:00" />
+          </label>
+        </div>
+      </div>
+
+      <!-- Integraciones -->
+      <div class="card tabpanel hide" data-panel="integraciones">
+        <div class="grid grid-2">
+          <label class="field">
+            <span>API Key</span>
+            <div class="inline">
+              <input id="inpApiKey" type="text" readonly />
+              <button id="btnVerApi" class="btn btn-ghost small">Ver</button>
+              <button id="btnRegenApi" class="btn btn-primary small">Regenerar</button>
+            </div>
+            <p class="muted small">Usa esta clave para integrar tu backend (solo demo local).</p>
+          </label>
+
+          <label class="field">
+            <span>Webhooks</span>
+            <input id="inpWebhook" type="url" placeholder="https://mi.backend/hook" />
+            <p class="muted small">Recibe eventos: predicciones, alertas, cambios de estado.</p>
+          </label>
+        </div>
+      </div>
+
+      <!-- Zona de peligro -->
+      <div class="card danger-zone">
+        <div class="grid grid-2">
+          <div>
+            <strong>Zona de peligro</strong>
+            <p class="muted small">Acciones irreversibles (simuladas en demo).</p>
+          </div>
+          <div class="actions end">
+            <button id="btnLogout" class="btn btn-ghost">Cerrar sesión</button>
+            <button id="btnDeactivate" class="btn btn-ghost">Desactivar cuenta</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <script src="../JavaScript/perfil.js"></script>
+</body>
+</html>

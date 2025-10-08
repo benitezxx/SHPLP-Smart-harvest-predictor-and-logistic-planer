@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Harvest – Alertas</title>
+  <link rel="stylesheet" href="../CSS/alertas.css" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="badge">SH</div>
+      <div class="brand-title">Smart Harvest</div>
+      <button id="closeSidebar" class="icon-btn" aria-label="Cerrar menú">✕</button>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="../HTML/dashboard.html">Inicio</a></li>
+        <li><a href="#">Sensores</a></li>
+        <li><a href="../HTML/predicciones.html">Predicciones</a></li>
+        <li class="active"><a href="../HTML/alertas.html">Alertas</a></li>
+        <li><a href="#">Planning</a></li>
+        <li><a href="../HTML/perfil.html">Perfil</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-footer">v1.0 • Proyecto Ágiles</div>
+  </aside>
+
+  <!-- Page -->
+  <main class="page">
+    <header class="topbar">
+      <button id="openSidebar" class="icon-btn" aria-label="Abrir menú">☰</button>
+      <div class="search">
+        <input id="q" type="search" placeholder="Buscar por mensaje, lote o zona…" />
+      </div>
+      <span class="chip">Alertas</span>
+    </header>
+
+    <section class="content">
+      <div class="section-header">
+        <div>
+          <h1>Centro de Alertas</h1>
+          <p class="muted">Señales tempranas de clima, plagas, enfermedades y logística</p>
+        </div>
+        <div class="actions">
+          <button id="btnExportCSV" class="btn btn-ghost small">Exportar CSV</button>
+          <button id="btnResolveSelected" class="btn btn-primary small">Marcar resueltas</button>
+        </div>
+      </div>
+
+      <!-- Filtros -->
+      <div class="card filters">
+        <div class="grid grid-6">
+          <label class="field">
+            <span>Tipo</span>
+            <select id="fTipo">
+              <option value="">Todos</option>
+              <option value="plaga">Plaga</option>
+              <option value="enfermedad">Enfermedad</option>
+              <option value="clima">Clima</option>
+              <option value="logistica">Logística</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Severidad</span>
+            <select id="fSeveridad">
+              <option value="">Todas</option>
+              <option value="alta">Alta</option>
+              <option value="media">Media</option>
+              <option value="baja">Baja</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Estado</span>
+            <select id="fEstado">
+              <option value="">Todos</option>
+              <option value="abierta">Abierta</option>
+              <option value="pospuesta">Pospuesta</option>
+              <option value="silenciada">Silenciada</option>
+              <option value="resuelta">Resuelta</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Zona</span>
+            <select id="fZona">
+              <option value="">Todas</option>
+              <option value="norte">Norte</option>
+              <option value="centro">Centro</option>
+              <option value="sur">Sur</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Desde</span>
+            <input id="fDesde" type="date" />
+          </label>
+          <label class="field">
+            <span>Hasta</span>
+            <input id="fHasta" type="date" />
+          </label>
+        </div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpis">
+        <div class="card kpi"><div class="kpi-title">Altas</div><div class="value" id="kpiAlta">0</div></div>
+        <div class="card kpi"><div class="kpi-title">Medias</div><div class="value" id="kpiMedia">0</div></div>
+        <div class="card kpi"><div class="kpi-title">Bajas</div><div class="value" id="kpiBaja">0</div></div>
+        <div class="card kpi"><div class="kpi-title">Abiertas</div><div class="value" id="kpiAbiertas">0</div></div>
+      </div>
+
+      <div class="grid grid-main">
+        <!-- Tabla de alertas -->
+        <div class="card">
+          <div class="table-header">
+            <div class="left">
+              <label class="chk"><input type="checkbox" id="chkAll" /> <span>Seleccionar todo</span></label>
+            </div>
+            <div class="right">
+              <button id="btnSnoozeSelected" class="btn small btn-ghost">Posponer 24h</button>
+              <button id="btnSilenceSelected" class="btn small btn-ghost">Silenciar</button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table id="tblAlertas">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th data-sort="fecha">Fecha</th>
+                  <th data-sort="tipo">Tipo</th>
+                  <th data-sort="severidad">Severidad</th>
+                  <th data-sort="zona">Zona</th>
+                  <th data-sort="mensaje">Mensaje</th>
+                  <th data-sort="estado">Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <div class="table-footer">
+            <div class="muted small" id="pageInfo">—</div>
+            <div class="pager">
+              <button id="prevPage" class="btn small btn-ghost">Anterior</button>
+              <button id="nextPage" class="btn small btn-ghost">Siguiente</button>
+              <select id="pageSize" class="page-size">
+                <option value="10">10 / pág</option>
+                <option value="20">20 / pág</option>
+                <option value="50">50 / pág</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel de detalle -->
+        <div class="card details" id="panelDetalle">
+          <div class="card-header">
+            <strong>Detalle</strong>
+          </div>
+          <div class="detail-body">
+            <div class="muted">Selecciona una alerta para ver el detalle.</div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="muted small">* Datos simulados para integración – conecta tu backend cuando esté listo.</footer>
+    </section>
+  </main>
+
+  <script src="../JavaScript/alertas.js"></script>
+</body>
+</html>

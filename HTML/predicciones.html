@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Harvest – Predicciones</title>
+  <link rel="stylesheet" href="../CSS/predicciones.css" />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="badge">SH</div>
+      <div class="brand-title">Smart Harvest</div>
+      <button id="closeSidebar" class="icon-btn" aria-label="Cerrar menú">✕</button>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="../HTML/dashboard.html">Inicio</a></li>
+        <li><a href="#">Sensores</a></li>
+        <li class="active"><a href="../HTML/predicciones.html">Predicciones</a></li>
+        <li><a href="../HTML/alertas.html">Alertas</a></li>
+        <li><a href="#">Planning</a></li>
+        <li><a href="../HTML/perfil.html">Perfil</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-footer">v1.0 • Proyecto Ágiles</div>
+  </aside>
+
+  <!-- Page -->
+  <main class="page">
+    <header class="topbar">
+      <button id="openSidebar" class="icon-btn" aria-label="Abrir menú">☰</button>
+      <div class="search">
+        <input type="search" placeholder="Buscar lote, zona o cultivo…" />
+      </div>
+      <span class="chip">Predicciones</span>
+    </header>
+
+    <section class="content">
+      <div class="section-header">
+        <div>
+          <h1>Predicciones de Cosecha</h1>
+          <p class="muted">Proyección de rendimiento, riesgo fitosanitario y precios esperados</p>
+        </div>
+        <div class="actions">
+          <button id="btnExportCSV" class="btn btn-ghost small">Descargar CSV</button>
+          <button id="btnRecalcular" class="btn btn-primary small">Recalcular</button>
+        </div>
+      </div>
+
+      <!-- Filtros -->
+      <div class="card filters">
+        <div class="grid grid-4">
+          <label class="field">
+            <span>Cultivo</span>
+            <select id="selCultivo">
+              <option value="maiz">Maíz</option>
+              <option value="trigo">Trigo</option>
+              <option value="soya">Soya</option>
+              <option value="aguacate">Aguacate</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Zona</span>
+            <select id="selZona">
+              <option value="norte">Norte</option>
+              <option value="centro" selected>Centro</option>
+              <option value="sur">Sur</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Horizonte (semanas)</span>
+            <input id="inpHorizonte" type="number" min="4" max="52" value="12" />
+          </label>
+          <label class="field">
+            <span>Modelo</span>
+            <select id="selModelo">
+              <option value="lstm" selected>LSTM</option>
+              <option value="xgboost">XGBoost</option>
+              <option value="arima">ARIMA</option>
+              <option value="ensemble">Ensamble</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpis">
+        <div class="card kpi">
+          <div class="kpi-title">Rendimiento esperado</div>
+          <div class="value" id="kpiRend">— t/ha</div>
+          <div class="delta" id="kpiDeltaRend">—</div>
+        </div>
+        <div class="card kpi">
+          <div class="kpi-title">Prob. plaga</div>
+          <div class="value" id="kpiPlaga">—%</div>
+          <div class="delta warn">Ventana crítica próxima</div>
+        </div>
+        <div class="card kpi">
+          <div class="kpi-title">Riesgo enfermedad</div>
+          <div class="value" id="kpiEnf">—%</div>
+          <div class="delta">Basado en humedad/temperatura</div>
+        </div>
+        <div class="card kpi">
+          <div class="kpi-title">Precio esperado</div>
+          <div class="value" id="kpiPrecio">$ — /t</div>
+          <div class="delta" id="kpiDeltaPrecio">—</div>
+        </div>
+      </div>
+
+      <div class="grid grid-main">
+        <!-- Chart -->
+        <div class="card chart-card">
+          <div class="card-header">
+            <div>
+              <strong>Proyección de rendimiento</strong>
+              <div class="muted small">t/ha por semana</div>
+            </div>
+            <div class="legend">
+              <span><span class="dot dot-1"></span>Predicción</span>
+              <span><span class="dot dot-2"></span>IC 80%</span>
+              <span><span class="dot dot-3"></span>Histórico</span>
+            </div>
+          </div>
+          <canvas id="predChart"></canvas>
+        </div>
+
+        <!-- Riesgos -->
+        <div class="card">
+          <div class="card-header">
+            <strong>Riesgos y alertas</strong>
+          </div>
+          <ul class="list">
+            <li>
+              <span class="badge warn">Plaga</span>
+              Alta actividad de <b>gusano cogollero</b> probable en 1–2 semanas en Zona Centro.
+            </li>
+            <li>
+              <span class="badge danger">Enfermedad</span>
+              Riesgo de <b>roya</b> si humedad relativa &gt; 85% por 3 días consecutivos.
+            </li>
+            <li>
+              <span class="badge info">Clima</span>
+              Posible evento de lluvias intensas que puede retrasar cosecha.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tabla -->
+      <div class="card">
+        <div class="card-header">
+          <strong>Detalle de predicciones por semana</strong>
+          <div class="filters">
+            <select id="selVista">
+              <option value="rendimiento">Rendimiento</option>
+              <option value="precio">Precio</option>
+              <option value="plaga">Prob. Plaga</option>
+              <option value="enfermedad">Riesgo Enfermedad</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table id="tblPred">
+            <thead>
+              <tr>
+                <th>Semana</th>
+                <th>Fecha</th>
+                <th>Valor</th>
+                <th>IC Bajo</th>
+                <th>IC Alto</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <footer class="muted small">* Datos simulados para integración – conecta tu backend cuando lo tengas listo.</footer>
+    </section>
+  </main>
+
+  <script src="../JavaScript/predicciones.js"></script>
+</body>
+</html>
