@@ -40,7 +40,7 @@ form.addEventListener('submit', (e) => {
   // Simulación de éxito
   formError.style.color = '#22c55e';
   formError.textContent = 'Autenticación exitosa (demo). Redirigiendo…';
-  setTimeout(()=> window.location.href = '/dashboard.html', 800);
+  setTimeout(()=> window.location.href = '../HTML/dashboard.html', 800);
 });
 
 // Modal recuperación
